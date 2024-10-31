@@ -13,9 +13,9 @@ export const App = () => {
       </header>
 
 
-      <main className="container mx-auto grid grid-cols-3 gap-2">
+      <main className="container mx-auto grid grid-cols-1 gap-2  lg:grid-cols-3">
         <ProductForm />
-        <div className="border p-4 col-span-2">
+        <div className="border p-4 col-span-1 lg:col-span-2">
 
         </div>
       </main>
