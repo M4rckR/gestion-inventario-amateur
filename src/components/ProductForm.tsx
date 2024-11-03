@@ -1,16 +1,20 @@
 import { useState } from "react";
-import { useInventary } from "../hooks/useInventary";
-import Swal from "sweetalert2";
-import withReactContent from "sweetalert2-react-content";
+import { Product, NewProduct } from "../types";
 
-const MySwal = withReactContent(Swal);
+type ProductFormProps = {
+    addProduct: (item:NewProduct) => void
+    productos: Product[]
+}
 
-export const ProductForm = () => {
+import { MySwal } from "../helper/sweetAlert";
+
+export const ProductForm = ({addProduct, productos}:ProductFormProps) => {
     const [nombre, setNombre] = useState('')
     const [precio, setPrecio] = useState(0)
     const [cantidad, setCantidad] = useState(0)
+    // const [productoIngresado, setProductoIngresado] = useState(null)
 
-    const {addProduct} = useInventary()
+
 
     const handleSubmit = (e:React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -44,19 +48,22 @@ export const ProductForm = () => {
         }
 
         else{
-            addProduct({name:nombre,price:precio,quantity:cantidad})
+          if(productos.some(producto => producto.name.toLocaleLowerCase() === nombre.toLocaleLowerCase())){
             MySwal.fire({
-                title: 'Producto agregado',
-                text: 'El producto se ha agregado correctamente',
-                icon: 'success'
+                title: 'Error',
+                text: 'No puede haber dos productos con el mismo nombre',
+                icon: 'error'
                   });
+            return
+          }
+          addProduct({name:nombre,price:precio,quantity:cantidad,total:precio*cantidad})
         }
 
     }
 
   return (
     <>
-      <form onSubmit={handleSubmit} noValidate className="border p-4 col-span-1">
+      <form onSubmit={handleSubmit} noValidate className="border p-4 col-span-full md:col-span-1">
         <h2 className="text-center text-2xl mb-4 bg-slate-700 text-white p-2 font-bold">
           Agregar producto
         </h2>

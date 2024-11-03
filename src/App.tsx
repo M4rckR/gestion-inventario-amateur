@@ -1,8 +1,9 @@
 import { ProductForm } from "./components/ProductForm";
-
+import { ProductLists } from "./components/ProductLists" 
+import { useInventary } from "./hooks/useInventary";
 
 export const App = () => {
-
+  const {addProduct, productos, total, removeProduct} = useInventary()
 
   return (
     <>
@@ -13,11 +14,16 @@ export const App = () => {
       </header>
 
 
-      <main className="container mx-auto grid grid-cols-1 gap-2  lg:grid-cols-3">
-        <ProductForm />
-        <div className="border p-4 col-span-1 lg:col-span-2">
-
-        </div>
+      <main className="container px-4 mx-auto md:px-0 grid grid-cols-1 gap-4 lg:grid-cols-3">
+        <ProductForm 
+          addProduct={addProduct}
+          productos={productos}
+          />
+        <ProductLists 
+          productos={productos}
+          total={total}
+          removeProduct={removeProduct}
+        />
       </main>
 
 
