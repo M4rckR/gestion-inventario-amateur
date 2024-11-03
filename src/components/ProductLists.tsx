@@ -32,7 +32,7 @@ export const ProductLists = ({productos,total,removeProduct}:ProductListsProps) 
                     <p className="flex-1 text-left">{producto.total}</p>
                     <div className="flex flex-1">
                       <button className="text-red-600 text-2xl">
-                        <MdDelete 
+                        <MdDelete
                           onClick={() => removeProduct(producto.id)}
                         />
                       </button>
